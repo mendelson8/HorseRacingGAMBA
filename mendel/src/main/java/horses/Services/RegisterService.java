@@ -2,23 +2,40 @@ package horses.Services;
 
 import horses.Dtos.RegisterDto;
 import horses.Repositories.RegisterInterface;
-import horses.databases.RegisterInfo;
+import horses.databases.User;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.security.core.userdetails.UserDetailsService;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
 @Service
-public class RegisterService {
+public class RegisterService implements UserDetailsService {
 
-    private final RegisterInterface registerInterface;
+    @Autowired
+    private RegisterInterface registerInterface;
 
-    public RegisterService(RegisterInterface registerInterface) {
-        this.registerInterface = registerInterface;
-    }
-    public RegisterDto createAccount(RegisterDto dto) {
-        RegisterInfo info = RegisterInfo.builder()
-                .login(dto.username())
-                .password(dto.password())
+
+    public String create(RegisterDto dto) {
+        User info = User.builder()
+                .username(dto.username())
+                .password(new BCryptPasswordEncoder().encode(dto.password()))
+                .authorities("USER")
                 .build();
         registerInterface.save(info);
-        return dto;
+        return "Create Successfully";
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        // Retrieves user details by username from the database
+        return registerInterface.findByUsername(username);
     }
 }

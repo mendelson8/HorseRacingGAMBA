@@ -1,5 +1,6 @@
-CREATE TABLE IF NOT EXISTS users(
-    id uuid,
-    login VARCHAR(100),
-    password VARCHAR(100)
+CREATE TABLE IF NOT EXISTS public.users (
+    id UUID PRIMARY KEY,
+    username VARCHAR(100) NOT NULL,
+    password VARCHAR(100) NOT NULL,
+    authorities VARCHAR(100) NOT NULL
 );

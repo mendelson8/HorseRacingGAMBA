@@ -16,9 +16,13 @@ public class RegisterController {
     public String hello() {
         return "Hello, World!";
     }
+    @GetMapping("/user")
+    public String user() {
+        return "Hello, User!";
+    }
     @PostMapping("/register")
     public RegisterDto register(@RequestBody RegisterDto registerDto){
-        registerService.createAccount(registerDto);
+        registerService.create(registerDto);
         return registerDto;
     }
 }

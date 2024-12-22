@@ -20,7 +20,7 @@ import org.hibernate.annotations.ColumnDefault;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "horses", schema = "public")
+@Table(name = "users", schema = "public")
 public class RegisterInfo {
     @Id
     @Builder.Default

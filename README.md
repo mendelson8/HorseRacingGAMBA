@@ -1,6 +1,6 @@
-Install docker desktop
+Install docker desktop \n
 docker run --name postgres-horses -e POSTGRES_DB=horses -e POSTGRES_USER=admin -e POSTGRES_PASSWORD=password -p 5432:5432 -d postgres
-
+\n
 run docker container
 run project
 test connection:

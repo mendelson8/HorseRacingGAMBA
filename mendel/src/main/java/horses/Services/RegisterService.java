@@ -22,12 +22,12 @@ public class RegisterService implements UserDetailsService {
     @Autowired
     private RegisterInterface registerInterface;
 
-
     public String create(RegisterDto dto) {
         User info = User.builder()
                 .username(dto.username())
                 .password(new BCryptPasswordEncoder().encode(dto.password()))
                 .authorities("USER")
+                .points(0)
                 .build();
         registerInterface.save(info);
         return "Create Successfully";

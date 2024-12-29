@@ -46,6 +46,11 @@ public class User implements UserDetails {
     @Column(name = "authorities", nullable = false, length = 100)
     private String authorities;
 
+    @Size(max = 100)
+    @NotNull
+    @Column(name = "points", nullable = false)
+    private int points;
+
     @Override
     public String getUsername() {
         return username;

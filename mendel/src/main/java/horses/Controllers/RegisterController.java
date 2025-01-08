@@ -3,7 +3,6 @@ package horses.Controllers;
 import horses.Dtos.RegisterDto;
 import horses.Services.RegisterService;
 import org.springframework.web.bind.annotation.*;
-
 @RestController
 @RequestMapping("/api")
 public class RegisterController {
@@ -20,6 +19,7 @@ public class RegisterController {
     public String user() {
         return "Hello, User!";
     }
+
     @PostMapping("/register")
     public RegisterDto register(@RequestBody RegisterDto registerDto){
         registerService.create(registerDto);

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Horses</title>
+  <link rel="stylesheet" href="styles/login-page.css">
+  <link rel="stylesheet" href="styles/header.css">
+  <link rel="stylesheet" href="styles/core.css">
+</head>
+<body>
+<header>
+  <div class="header-left">
+    <a href="index.html"><p class="logo-text">Horses</p></a>
+  </div>
+  <div class="header-middle">
+    <a href="game.html"><p class="menu-text">Game</p></a>
+  </div>
+  <div class="header-right">
+    <div class="-account-dropdown-container">
+      <button class="account-dropdown-button pixel-corners"><img class="user-icon" src="icons/user.png" ></button>
+      <div class="account-dropdown-content-hidden">
+        <div class="account-dropdown-content">
+          <a href="login-page.html"><button class="login-button pixel-corners" ><img class="login-icon" src="icons/login-.png" >Sign in</button></a>
+          <a href="register-page.html"><button class="login-button pixel-corners" ><img class="login-icon" src="icons/login-.png" >Sign up</button></a>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<main class="main-container">
+  <div class="login-window  pixel-corners">
+      <div class="login-form-header">
+        <h1>Sign in</h1>
+      </div>
+      <div class="login-form-body">
+        <form id="login-form" class="login-form">
+        <div class="login-input-container">
+        <p class="login-input-label">Username:</p>
+        <input  id="username" class="login-input" type="text" name="username" placeholder="Username" required>
+      </div>
+        <div class="password-input-container">
+          <p class="password-input-label">Password:</p>
+          <input id="password" class="password-input" type="text" name="username" placeholder="Password" required>
+        </div>
+          <input class="submit-button pixel-corners" type="submit" value="Sign in">
+        </form>
+        <div class="login-form-footer">
+          <p>Don't have an account? <a href="register-page.html">Sign up</a></p>
+        </div>
+      </div>
+  </div>
+</main>
+<script>
+  document.getElementById("loginForm").addEventListener("submit", async function(event) {
+    event.preventDefault();  // Prevent form submission (default behavior)
+
+    // Get form data
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    // Create the login payload
+    const loginData = new URLSearchParams();
+    loginData.append("username", username);
+    loginData.append("password", password);
+
+    // Send the POST request via fetch
+    try {
+      console.log('Attempting to send login request');
+      const response = await fetch("/api/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded"  // Adjust if using JSON
+        },
+        body: loginData
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log(result.message); // e.g., "Login successful"
+        // Redirect or handle the login success
+        window.location.href = "/game.html";
+      } else {
+        console.error("Login failed");
+        // Handle login failure (e.g., show error message)
+      }
+    } catch (error) {
+      console.error("Error during login:", error);
+      alert("An error occurred. Please try again.");
+    }
+  });
+</script>
+</body>
+</html>

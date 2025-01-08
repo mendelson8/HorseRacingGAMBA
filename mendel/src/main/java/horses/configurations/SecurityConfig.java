@@ -49,18 +49,30 @@ public class SecurityConfig{
         return new BCryptPasswordEncoder();
     }
 
+    private final LoggedUserLog loggedUserLog;
+
+    public SecurityConfig(LoggedUserLog loggedUserLog) {
+        this.loggedUserLog = loggedUserLog;
+    }
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .csrf(csrf -> csrf.disable())
-                .httpBasic(Customizer.withDefaults())
+                .csrf(csrf -> csrf.disable())  // Disable CSRF for simplicity (or handle it accordingly)
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers("/api/user").hasAuthority("USER")
                         .requestMatchers("/game/**").hasAuthority("USER")
                         .requestMatchers("/game/list/**").permitAll()
                         .anyRequest().permitAll()
                 )
-                .formLogin(form ->form.successHandler(new LoggedUserLog()));
+                // Updated configuration for Spring Security 6.1+
+                .formLogin(form -> form
+                        .loginPage("/login-page.html")  // Custom login page URL
+                        .loginProcessingUrl("/api/login")  // Process POST requests to /api/login
+                        .successHandler(loggedUserLog)// Redirect after successful login
+                        .permitAll()  // Allow all to access login page
+                );
+
         return httpSecurity.build();
     }
 }

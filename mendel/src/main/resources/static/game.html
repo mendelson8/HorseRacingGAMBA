@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+</body>
+</html><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Horses</title>
+  <link rel="stylesheet" href="styles/header.css">
+  <link href="styles/core.css" rel="stylesheet">
+  <link href="styles/game.css" rel="stylesheet">
+</head>
+<body>
+<header>
+  <div class="header-left">
+    <a href="index.html"><p class="logo-text">Horses</p></a>
+  </div>
+  <div class="header-middle">
+    <a href="game.html"><p class="menu-text">Game</p></a>
+  </div>
+  <div class="header-right">
+    <div class="-account-dropdown-container">
+      <button class="account-dropdown-button pixel-corners"><img class="user-icon" src="icons/user.png" ></button>
+      <div class="account-dropdown-content-hidden">
+        <div class="account-dropdown-content">
+          <p class="account-infomenu-text">Player name</p>
+          <p class="account-infomenu-text">Balance:</p>
+          <p class="balance">$0</p>
+          <button class="log-out-button"><p class="account-infomenu-text">Log out</p></button>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<main class="main">
+  <div class="game">
+    <div class="game-header">
+      <pre class =betting-phase> Place your bets! </pre>
+      <div class =betting-phase id="timer">10:00</div>
+      <p class="racing-phase">Betting closed, race ongoing</p>
+    </div>
+    <div class="pixel-corners">
+    <div class="game-content" >
+      <div class="carp-track">
+        <img class = "horse-gif" src="animation/magikarpp.gif" alt="horse">
+      </div>
+      <div class="carp-track">
+        <img class = "horse-gif" src="animation/magikarpp.gif" alt="horse">
+      </div>
+      <div class="carp-track">
+        <img class = "horse-gif" src="animation/magikarpp.gif" alt="horse">
+      </div>
+      <div class="carp-track">
+        <img class = "horse-gif" src="animation/magikarpp.gif" alt="horse">
+      </div>
+      <div class="carp-track">
+        <img class = "horse-gif" src="animation/magikarpp.gif" alt="horse">
+      </div>
+    </div>
+    </div>
+  </div>
+  <div class="pixel-corners">
+    <div class="player-menu">
+      <div class="balance-info">
+        <pre>Your Balance: </pre>
+        <p class="balance-betting">800</p>
+      </div>
+      <div class="betting">
+        <form>
+          <p>Bet value:</p>
+          <input class="bet-value-input" id="dynamic-input" type="number" value="0">
+          <p>Choose your horse:</p>
+          <select class="horse-select">
+            <option value="1">Horse 1</option>
+            <option value="2">Horse 2</option>
+            <option value="3">Horse 3</option>
+            <option value="4">horse 4</option>
+            <option value="5">Horse 5</option>
+          </select>
+          <button class="bet-value-button" type="submit">Bet</button>
+        </form>
+      </div>
+    </div>
+    <div class="players-list">
+      <div class="players-list-header">
+      <p class="player-list-title">Players List:</p>
+      </div>
+      <div class="players-list-body">
+        <div class="pixel-corners">
+          <div class="player-container" >
+            <div class="player-name-container">
+              <p class="player-name">Xeedo</p>
+            </div>
+            <div class="player-bet-container">
+              <p class="player-bet-horse">Horse 1</p>
+              <p class="player-bet-value">10 pt</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<script>
+  const input = document.getElementById("dynamic-input");
+
+  function adjustInputWidth() {
+    const testSpan = document.createElement("span");
+    testSpan.style.visibility = "hidden";
+    testSpan.style.whiteSpace = "nowrap";
+    testSpan.style.font = window.getComputedStyle(input).font;
+    document.body.appendChild(testSpan);
+
+    // Use input value or placeholder to measure width
+    testSpan.textContent = input.value || input.placeholder;
+    const newWidth = testSpan.offsetWidth + 20; // Add padding
+    input.style.width = `${newWidth}px`;
+
+    document.body.removeChild(testSpan);
+  }
+
+  // Adjust width on input or when the page loads
+  input.addEventListener("input", adjustInputWidth);
+  window.addEventListener("load", adjustInputWidth);
+</script>
+</body>
+</html>

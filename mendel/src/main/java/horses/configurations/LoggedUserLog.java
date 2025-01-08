@@ -22,6 +22,6 @@ public class LoggedUserLog implements AuthenticationSuccessHandler {
         if (session != null) {
             logger.info("User {} has logged in", authentication.getName());
         }
-        response.sendRedirect("/");
+        response.sendRedirect("/gane/create");
     }
 }

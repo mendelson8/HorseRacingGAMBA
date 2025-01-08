@@ -22,7 +22,9 @@ public class RegisterController {
     }
     @PostMapping("/register")
     public RegisterDto register(@RequestBody RegisterDto registerDto){
+        System.out.print("registerDto: " + registerDto);
         registerService.create(registerDto);
+        System.out.print("Create Successfully");
         return registerDto;
     }
 }

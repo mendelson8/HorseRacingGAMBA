@@ -2,8 +2,6 @@ package horses.Controllers;
 
 import horses.Dtos.RegisterDto;
 import horses.Services.RegisterService;
-<<<<<<< Updated upstream
-=======
 import horses.configurations.JwtUtil;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -17,12 +15,14 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
->>>>>>> Stashed changes
 import org.springframework.web.bind.annotation.*;
 @RestController
 @RequestMapping("/api")
 public class RegisterController {
     private final RegisterService registerService;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
 
     public RegisterController(RegisterService registerService) {
         this.registerService = registerService;
@@ -41,9 +41,6 @@ public class RegisterController {
         registerService.create(registerDto);
         return registerDto;
     }
-<<<<<<< Updated upstream
-}
-=======
 
 
     @PostMapping("/perform_login")
@@ -77,4 +74,3 @@ public class RegisterController {
     }
 }
 }
->>>>>>> Stashed changes

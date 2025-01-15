@@ -125,9 +125,13 @@ public class SecurityConfig {
         return httpSecurity.build();
     }
 
+<<<<<<< Updated upstream
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
 }*/
+=======
+}
+>>>>>>> Stashed changes

@@ -7,4 +7,8 @@ public record Game(
         int game_id,
         int num_of_players,
         Map<String,Integer> players
+        //tablica 3xN N graczy nazwa gracz numer konia wartosc betu
+        // faza gry
+        //koniec betowania
+        // mapa [5,int]
 ) {}

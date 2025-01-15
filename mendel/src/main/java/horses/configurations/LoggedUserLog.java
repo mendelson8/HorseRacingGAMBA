@@ -20,6 +20,7 @@ public class LoggedUserLog implements AuthenticationSuccessHandler {
     public void onAuthenticationSuccess(HttpServletRequest request,
                                         HttpServletResponse response, Authentication authentication)
             throws IOException {
+<<<<<<< Updated upstream
         logger.info("User {} has logged in successfully", authentication.getName());
 
         // Set the response type to JSON
@@ -29,5 +30,12 @@ public class LoggedUserLog implements AuthenticationSuccessHandler {
         // Write JSON response
         response.getWriter().write("{\"status\": \"success\", \"message\": \"Login successful\"}");
         response.getWriter().flush();
+=======
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            logger.info("User {} has logged in", authentication.getName());
+        }
+        response.sendRedirect("/game/create");
+>>>>>>> Stashed changes
     }
 }

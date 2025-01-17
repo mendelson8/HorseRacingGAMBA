@@ -23,7 +23,9 @@ public class CreateGame {
     List<Game> games = new ArrayList<Game>();
     private static final String SECRET_KEY = "your_secret_key";
 
-
+    public List<Game> getGames() {
+        return games;
+    }
 
     @GetMapping("/create")
     public ResponseEntity<?> CreateGame(@RequestHeader("Authorization") String authorizationHeader, HttpServletRequest request) {
@@ -32,9 +34,10 @@ public class CreateGame {
         if (authentication == null || !authentication.isAuthenticated()) {
             return ResponseEntity.status(401).body("User is not authenticated");
         }
-
-        games.add(new Game(number_of_games + 1, 0, new HashMap<>()));
+        System.out.println("aha");
+        games.add(new Game(number_of_games + 1, 0,new HashMap<>(),"Betting"));
         number_of_games++;
+
         return JoinGame(authorizationHeader, number_of_games, request);
     }
 
@@ -58,20 +61,20 @@ public class CreateGame {
         if (authentication == null || !authentication.isAuthenticated()) {
             return ResponseEntity.status(401).body("User is not authenticated");
         }
-
+        System.out.println(games.size());
         String username = authentication.getName();
         for (int i = 0; i < games.size(); i++) {
             Game game = games.get(i);
             if (game.game_id() == game_id) {
                 game.players().put(username, 0);
-                Game newGame = new Game(game.game_id(), game.num_of_players() + 1, game.players());
+                Game newGame = new Game(game.game_id(), game.num_of_players() + 1, game.players(), game.phase());
                 games.set(i, newGame);
                 return ResponseEntity.status(200).body("Game found and user joined");
             }
         }
         return ResponseEntity.status(404).body("Game not found");
     }
-    @PostMapping("/bet/{game_id}")
+    /*@PostMapping("/bet/{game_id}")
     public String Bet(Authentication authentication, @PathVariable int game_id, @RequestBody String bet) {
         int betint = Integer.parseInt(bet);
         for (int i = 0; i < games.size(); i++) {
@@ -86,5 +89,5 @@ public class CreateGame {
             }
         }
         return "Not found game";
-    }
+    }*/
 }

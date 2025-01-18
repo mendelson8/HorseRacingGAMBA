@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -20,7 +21,8 @@ public class SecurityConfig{
 
     @Autowired
     private RegisterService registerService;
-
+    @Autowired
+    private CorsConfig corsConfig;
 
     @Bean
     public AuthenticationProvider authenticationProvider() {
@@ -44,20 +46,18 @@ public class SecurityConfig{
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .csrf(csrf -> csrf.disable())  // Disable CSRF for simplicity (or handle it accordingly)
+                .csrf(csrf -> csrf.disable())
+                .cors(cors -> cors.configurationSource(corsConfig.corsConfigurationSource()))
+                .httpBasic(Customizer.withDefaults())
                 .authorizeHttpRequests(authorizeRequests -> authorizeRequests
                         .requestMatchers("/api/user").hasAuthority("USER")
-                        .requestMatchers("/game/**").hasAuthority("USER")
                         .requestMatchers("/game/list/**").permitAll()
                         .anyRequest().permitAll()
                 )
-                // Updated configuration for Spring Security 6.1+
                 .formLogin(form -> form
-                        .loginPage("/login-page.html")  // Custom login page URL
-                        .loginProcessingUrl("/api/login")  // Process POST requests to /api/login
-                        .permitAll()  // Allow all to access login page
+                        .loginProcessingUrl("api/perform_login")
+                        .permitAll()
                 );
-
         return httpSecurity.build();
     }
 }
